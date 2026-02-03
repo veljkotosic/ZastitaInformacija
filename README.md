@@ -21,7 +21,7 @@ Ovaj projekat predstavlja desktop aplikaciju razvijenu u `.NET 10 (Windows Forms
     *   Detaljno praćenje svih akcija unutar aplikacije (informacije, upozorenja i greške).
     *   Logovi se prikazuju u realnom vremenu u UI-u i trajno čuvaju u `.log` fajlovima.
 
-### Podržani algoritmi
+### Implementirani algoritmi
 
 *   **Simetrični koderi bloka (Ciphers):**
     *   **TEA** (Tiny Encryption Algorithm)
