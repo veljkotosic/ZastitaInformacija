@@ -9,17 +9,17 @@ public sealed class Logger : IDisposable, IAsyncDisposable
     
     private readonly Lock _writeLock = new();
 
-    private const string Latest = "latest.log";
+    private readonly string _latest = $"latest_{Environment.ProcessId}.log";
 
     public Logger(string folder = "logs")
     {
         if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
 
-        _swOut = new StreamWriter(Path.Combine(folder, DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".log"), false)
+        _swOut = new StreamWriter(Path.Combine(folder, $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.log"), false)
         {
             AutoFlush = true
         };
-        _swLatest = new StreamWriter(Path.Combine(folder, Latest), false)
+        _swLatest = new StreamWriter(Path.Combine(folder, _latest), false)
         {
             AutoFlush = true
         };
