@@ -23,10 +23,10 @@ Ovaj projekat predstavlja desktop aplikaciju razvijenu u `.NET 10 (Windows Forms
 
 ### Podržani algoritmi
 
-*   **Simetrični algoritmi (Ciphers):**
+*   **Simetrični koderi bloka (Ciphers):**
     *   **TEA** (Tiny Encryption Algorithm)
     *   **LEA** (Lightweight Encryption Algorithm) - varijante od 128, 192 i 256 bita.
-    *   **CTR Mode:** Mogućnost korišćenja algoritama u Counter modu za povećanu sigurnost.
+    *   **CTR Mode:** Mogućnost korišćenja algoritama u Counter modu, odnosno kao koder toka.
 *   **Heš algoritmi (Hashes):**
     *   **SHA-256** (korišćen i za derivaciju ključa iz lozinke)
     *   **SHA-512**
