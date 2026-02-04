@@ -428,7 +428,6 @@ partial class MainForm
         tabPageNetwork.TabIndex = 2;
         tabPageNetwork.Text = "Network";
         tabPageNetwork.UseVisualStyleBackColor = true;
-        tabPageNetwork.Click += tabPageNetwork_Click;
         // 
         // groupBoxSendingNetwork
         // 
@@ -485,7 +484,6 @@ partial class MainForm
         buttonEncryptAndSendNetwork.TabIndex = 19;
         buttonEncryptAndSendNetwork.Text = "Encrypt and send\r\n";
         buttonEncryptAndSendNetwork.UseVisualStyleBackColor = true;
-        buttonEncryptAndSendNetwork.Click += ButtonEncryptAndSendNetworkClick;
         // 
         // textBoxFileToSendNetwork
         // 
@@ -511,7 +509,6 @@ partial class MainForm
         buttonFileToSendNetwork.TabIndex = 18;
         buttonFileToSendNetwork.Text = "Browse";
         buttonFileToSendNetwork.UseVisualStyleBackColor = true;
-        buttonFileToSendNetwork.Click += ButtonFileToSendNetworkClick;
         // 
         // groupBoxReceivingNetwork
         // 
@@ -557,7 +554,6 @@ partial class MainForm
         buttonStartNetwork.TabIndex = 0;
         buttonStartNetwork.Text = "Start";
         buttonStartNetwork.UseVisualStyleBackColor = true;
-        buttonStartNetwork.Click += ButtonStartNetworkClick;
         // 
         // textBoxKeyNetwork
         // 
@@ -574,7 +570,6 @@ partial class MainForm
         buttonStopNetwork.TabIndex = 1;
         buttonStopNetwork.Text = "Stop";
         buttonStopNetwork.UseVisualStyleBackColor = true;
-        buttonStopNetwork.Click += ButtonStopNetworkClick;
         // 
         // labelPortReceivingNetwork
         // 
@@ -592,7 +587,6 @@ partial class MainForm
         buttonOutputDirectoryNetwork.TabIndex = 12;
         buttonOutputDirectoryNetwork.Text = "Browse";
         buttonOutputDirectoryNetwork.UseVisualStyleBackColor = true;
-        buttonOutputDirectoryNetwork.Click += ButtonOutputDirectoryNetworkClick;
         // 
         // textBoxOutputDirectoryNetwork
         // 
@@ -620,7 +614,7 @@ partial class MainForm
         // 
         // openFileDialog
         // 
-        openFileDialog.FileName = "openFileDialog1";
+        openFileDialog.FileName = "";
         openFileDialog.InitialDirectory = "C:\\\\";
         openFileDialog.RestoreDirectory = true;
         // 
@@ -660,33 +654,11 @@ partial class MainForm
         ResumeLayout(false);
     }
 
-    private Button buttonEncryptAndSendNetwork;
-    private TextBox textBoxIPNetwork;
-    private TextBox textBoxPortSendingNetwork;
-    private Label labelIPNetwork;
-    private Label labelPortSendingNetwork;
-
     private GroupBox groupBoxReceivingNetwork;
     private GroupBox groupBoxSendingNetwork;
-
-    private Button buttonStartNetwork;
-    private Button buttonStopNetwork;
-    private TextBox textBoxOutputDirectoryNetwork;
-    private Button buttonOutputDirectoryNetwork;
-    private Label labelOutputDirectoryNetwork;
-    private TextBox textBoxPortReceivingNetwork;
-    private Button buttonFileToSendNetwork;
-    private Label labelFileToSendNetwork;
-    private TextBox textBoxFileToSendNetwork;
-    private Label labelPortReceivingNetwork;
-    private Label labelKeyNetwork;
-    private TextBox textBoxKeyNetwork;
-
-    #endregion
+    private GroupBox groupBoxCiphers;
+    private GroupBox groupBoxHashes;
     
-    private System.Windows.Forms.GroupBox groupBoxCiphers;
-    private System.Windows.Forms.GroupBox groupBoxHashes;
-
     private RadioButton radioButtonTEA;
     private RadioButton radioButtonLEA128;
     private RadioButton radioButtonLEA192;
@@ -702,32 +674,51 @@ partial class MainForm
     private Label labelInputDirectoryFSW;
     private Label labelOutputDirectoryFSW;
     private Label labelInputFileManual;
+    private Label labelPortReceivingNetwork;
+    private Label labelKeyNetwork;
+    private Label labelFileToSendNetwork;
+    private Label labelOutputDirectoryNetwork;
+    private Label labelIPNetwork;
+    private Label labelPortSendingNetwork;
     
-    private Button buttonInputDirectoryFSW;
     private Button buttonInputFileManual;
     private Button buttonDecryptManual;
+    private Button buttonInputDirectoryFSW;
     private Button buttonOutputDirectoryFSW;
     private Button buttonEncryptManual;
     private Button buttonBrowseOutputDirectoryManual;
     private Button buttonStopFSW;
     private Button buttonStartFSW;
+    private Button buttonStartNetwork;
+    private Button buttonStopNetwork;
+    private Button buttonOutputDirectoryNetwork;
+    private Button buttonFileToSendNetwork;
+    private Button buttonEncryptAndSendNetwork;
     
     private TextBox textBoxInputDirectoryFSW;
     private TextBox textBoxOutputDirectoryFSW;
     private TextBox textBoxInputFileManual;
     private TextBox textBoxKeyFSW;
     private TextBox textBoxKeyManual;
-    private System.Windows.Forms.TextBox textBoxOutputDirectoryManual;
+    private TextBox textBoxIPNetwork;
+    private TextBox textBoxPortSendingNetwork;
+    private TextBox textBoxOutputDirectoryManual;
+    private TextBox textBoxFileToSendNetwork;
+    private TextBox textBoxKeyNetwork;
+    private TextBox textBoxOutputDirectoryNetwork;
+    private TextBox textBoxPortReceivingNetwork;
     
-    private System.Windows.Forms.TabControl tabControlMode;
+    private TabControl tabControlMode;
     
     private TabPage tabPageManual;
     private TabPage tabPageFSW;
-    private System.Windows.Forms.TabPage tabPageNetwork;
+    private TabPage tabPageNetwork;
     
-    private System.Windows.Forms.RichTextBox richTextBoxLog;
+    private RichTextBox richTextBoxLog;
     
     private OpenFileDialog openFileDialog;
  
     private FolderBrowserDialog folderBrowserDialog;
+    
+    #endregion
 }

@@ -372,7 +372,7 @@ public partial class MainForm : Form
         }
 
         int port = int.Parse(portStr);
-        string key = textBoxKeyNetwork.Text; // Requirement says it uses same key as for receiving
+        string key = textBoxKeyNetwork.Text; 
         byte[] hashedKey = new Sha256().ComputeHash(key);
 
         try
@@ -383,9 +383,5 @@ public partial class MainForm : Form
         {
             _logger.LogError(AppLogTag, $"Failed to send file: {ex.Message}");
         }
-    }
-
-    private void tabPageNetwork_Click(object sender, EventArgs e)
-    {
     }
 }
