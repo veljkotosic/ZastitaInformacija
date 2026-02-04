@@ -144,7 +144,7 @@ public partial class MainForm : Form
         return true;
     }
     
-    private void ButtonInputFileManualClick(object sender, EventArgs e)
+    private void ButtonInputFileManual_Click(object sender, EventArgs e)
     {
         if (openFileDialog.ShowDialog() == DialogResult.OK)
         {
@@ -152,7 +152,7 @@ public partial class MainForm : Form
         }
     }
 
-    private void ButtonBrowseOutputDirectoryManualClick(object sender, EventArgs e)
+    private void ButtonBrowseOutputDirectoryManual_Click(object sender, EventArgs e)
     {
         if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
         {
@@ -176,7 +176,7 @@ public partial class MainForm : Form
         ManualService.Encrypt(inputFile, outputDirectory, key, _currentCipher!, _currentHasher!, _logger);
     }
 
-    private void ButtonEncryptManualClick(object sender, EventArgs e)
+    private void ButtonEncryptManual_Click(object sender, EventArgs e)
     {
         Task.Run(EncryptManual);
     }
@@ -212,12 +212,12 @@ public partial class MainForm : Form
         ManualService.Decrypt(inputFile, outputDirectory, key, _logger);
     }
 
-    private void ButtonDecryptManualClick(object sender, EventArgs e)
+    private void ButtonDecryptManual_Click(object sender, EventArgs e)
     {
         Task.Run(DecryptManual);
     }
 
-    private void ButtonBrowseInputDirectoryFSWClick(object sender, EventArgs e)
+    private void ButtonBrowseInputDirectoryFSW_Click(object sender, EventArgs e)
     {
         if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
         {
@@ -225,7 +225,7 @@ public partial class MainForm : Form
         }
     }
 
-    private void ButtonBrowseOutputDirectoryFSWClick(object sender, EventArgs e)
+    private void ButtonBrowseOutputDirectoryFSW_Click(object sender, EventArgs e)
     {
         if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
         {
@@ -233,7 +233,7 @@ public partial class MainForm : Form
         }
     }
 
-    private void ButtonStartFSWClick(object sender, EventArgs e)
+    private void ButtonStartFSW_Click(object sender, EventArgs e)
     {
         string inputFolder = textBoxInputDirectoryFSW.Text;
         string outputFolder = textBoxOutputDirectoryFSW.Text;
@@ -255,7 +255,7 @@ public partial class MainForm : Form
         buttonStopFSW.Enabled = true;
     }
 
-    private void ButtonStopFSWClick(object sender, EventArgs e)
+    private void ButtonStopFSW_Click(object sender, EventArgs e)
     {
         _folderWatcherService?.Stop();
         
@@ -263,7 +263,7 @@ public partial class MainForm : Form
         buttonStopFSW.Enabled = false;
     }
 
-    private void ButtonFileToSendNetworkClick(object sender, EventArgs e)
+    private void ButtonFileToSendNetwork_Click(object sender, EventArgs e)
     {
         if (openFileDialog.ShowDialog() == DialogResult.OK)
         {
@@ -271,7 +271,7 @@ public partial class MainForm : Form
         }
     }
 
-    private void ButtonOutputDirectoryNetworkClick(object sender, EventArgs e)
+    private void ButtonOutputDirectoryNetwork_Click(object sender, EventArgs e)
     {
         if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
         {
@@ -299,7 +299,7 @@ public partial class MainForm : Form
         return true;
     }
 
-    private void ButtonStartNetworkClick(object sender, EventArgs e)
+    private void ButtonStartNetwork_Click(object sender, EventArgs e)
     {
         string outputDirectory = textBoxOutputDirectoryNetwork.Text;
         string key = textBoxKeyNetwork.Text;
@@ -314,17 +314,25 @@ public partial class MainForm : Form
         int port = int.Parse(portStr);
 
         _networkService = new NetworkService(outputDirectory, hashedKey, _logger);
-        _networkService.Start(port);
-
-        buttonStartNetwork.Enabled = false;
-        buttonStopNetwork.Enabled = true;
+        
+        if (_networkService.Start(port))
+        {
+            buttonStartNetwork.Enabled = false;
+            buttonStopNetwork.Enabled = true;
+            buttonEncryptAndSendNetwork.Enabled = true;
+        }
+        else
+        {
+            _networkService = null;
+        }
     }
 
-    private void ButtonStopNetworkClick(object sender, EventArgs e)
+    private void ButtonStopNetwork_Click(object sender, EventArgs e)
     {
         _networkService?.Stop();
         buttonStartNetwork.Enabled = true;
         buttonStopNetwork.Enabled = false;
+        buttonEncryptAndSendNetwork.Enabled = false;
     }
 
     private bool InputForNetworkSendingValid(string inputFile, string ip, string portStr)
@@ -352,7 +360,7 @@ public partial class MainForm : Form
         return true;
     }
 
-    private async void ButtonEncryptAndSendNetworkClick(object sender, EventArgs e)
+    private async void ButtonEncryptAndSendNetwork_Click(object sender, EventArgs e)
     {
         if (_networkService == null)
         {
@@ -372,6 +380,7 @@ public partial class MainForm : Form
         }
 
         int port = int.Parse(portStr);
+        
         string key = textBoxKeyNetwork.Text; 
         byte[] hashedKey = new Sha256().ComputeHash(key);
 
@@ -382,6 +391,37 @@ public partial class MainForm : Form
         catch (Exception ex)
         {
             _logger.LogError(AppLogTag, $"Failed to send file: {ex.Message}");
+        }
+    }
+
+    private void textBoxPortReceivingNetwork_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+        {
+            e.Handled = true;
+        }
+    }
+
+    private void textBoxPortSendingNetwork_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+        {
+            e.Handled = true;
+        }
+    }
+
+    private void textBoxIPNetwork_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+        {
+            e.Handled = true; 
+        }
+
+        TextBox tb = (sender as TextBox)!;
+        
+        if (e.KeyChar == '.' && (tb.Text.EndsWith(".") || tb.Text.Length == 0))
+        {
+            e.Handled = true;
         }
     }
 }

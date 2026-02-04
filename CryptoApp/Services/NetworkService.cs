@@ -15,13 +15,13 @@ public sealed class NetworkService(string outputDirectory, byte[] key, Logger lo
     private const string ReceiverLogTag = "NET_RCV";
     private const string SenderLogTag = "NET_SND";
 
-    public void Start(int port)
+    public bool Start(int port)
     {
-        _cts = new CancellationTokenSource();
-        _listener = new TcpListener(IPAddress.Any, port);
-
         try
         {
+            _cts = new CancellationTokenSource();
+            _listener = new TcpListener(IPAddress.Any, port);
+            
             _listener.Start();
             logger.LogInfo(LogTag, $"Network service started on port {port}.");
             Task.Run(() => ListenAsync(_cts.Token), _cts.Token);
@@ -29,7 +29,10 @@ public sealed class NetworkService(string outputDirectory, byte[] key, Logger lo
         catch (Exception ex)
         {
             logger.LogError(LogTag, $"Failed to start network service: {ex.Message}");
+            return false;
         }
+        
+        return true;
     }
 
     private async Task ListenAsync(CancellationToken token)
