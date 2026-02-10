@@ -1,4 +1,4 @@
-### Projektni zadatak iz predmeta Zastita informacija
+### Projektni zadatak iz predmeta Zaštita informacija
 
 Ovaj projekat predstavlja desktop aplikaciju razvijenu u `.NET 10 (Windows Forms)` tehnologiji, namenjenu za enkripciju, dekripciju i prenos fajlova. Aplikacija implementira kriptografske algoritme i omogućava automatizaciju procesa kroz nadgledanje direktorijuma, kao i mrežni prenos podataka putem TCP soketa.
 
