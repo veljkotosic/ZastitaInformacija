@@ -53,6 +53,7 @@ public abstract class Sha2 : IHash
             {
                 ProcessBlock(Buffer);
                 BufferLen = 0;
+                Array.Clear(Buffer, 0, Buffer.Length);
             }
         }
     }

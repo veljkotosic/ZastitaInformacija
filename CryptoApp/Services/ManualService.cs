@@ -1,6 +1,7 @@
 using CryptoAlgorithms.Ciphers;
 using CryptoAlgorithms.Hashes;
 using CryptoFileSystem;
+using System.Text;
 
 namespace CryptoApp.Services;
 
@@ -10,14 +11,14 @@ public static class ManualService
 
     public static void Encrypt(string inputFile, string outputDirectory, string key, ICipher cipher, IHash hasher, Logger logger)
     {
-        byte[] hashedKey = new Sha256().ComputeHash(key);
+        byte[] hashedKey = new Sha256().ComputeHash(Encoding.UTF8.GetBytes(key.Trim()));
         string fileName = Path.GetFileName(inputFile);
 
         try
         {
             logger.LogInfo(ManualLogTag, $"Encrypting {fileName} using {cipher.AlgorithmName} and {hasher.AlgorithmName}.");
 
-            FileProcessor.EncryptFile(inputFile, Path.Combine(outputDirectory, fileName + ".enc"),
+            FileProcessor.EncryptFile(inputFile, Path.Combine(outputDirectory, fileName + ".pkg"),
                 cipher, hasher, hashedKey);
 
             logger.LogInfo(ManualLogTag, $"File {fileName} encrypted successfully.");
@@ -31,7 +32,7 @@ public static class ManualService
 
     public static void Decrypt(string inputFile, string outputDirectory, string key, Logger logger)
     {
-        byte[] hashedKey = new Sha256().ComputeHash(key);
+        byte[] hashedKey = new Sha256().ComputeHash(Encoding.UTF8.GetBytes(key.Trim()));
 
         try
         {

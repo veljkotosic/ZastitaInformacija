@@ -156,7 +156,7 @@ public sealed class NetworkService(string outputDirectory, byte[] key, Logger lo
         {
             logger.LogInfo(SenderLogTag, $"Preparing to send file: {Path.GetFileName(filePath)}");
             
-            tempEncryptedPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".enc");
+            tempEncryptedPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".pkg");
             FileProcessor.EncryptFile(filePath, tempEncryptedPath, cipher, hasher, key);
             
             using TcpClient client = new TcpClient();
@@ -164,7 +164,7 @@ public sealed class NetworkService(string outputDirectory, byte[] key, Logger lo
             await using NetworkStream stream = client.GetStream();
 
             string originalFileName = Path.GetFileName(filePath);
-            string encryptedFileName = originalFileName + ".enc";
+            string encryptedFileName = originalFileName + ".pkg";
             byte[] fileNameBytes = System.Text.Encoding.UTF8.GetBytes(encryptedFileName);
             byte[] fileNameLenBytes = BitConverter.GetBytes(fileNameBytes.Length);
             

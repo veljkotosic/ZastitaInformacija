@@ -86,7 +86,11 @@ public sealed class Sha256 : Sha2
 
         for (int i = 0; i < 16; i++)
         {
-            w[i] = (uint)((chunk[i * 4] << 24) | (chunk[i * 4 + 1] << 16) | (chunk[i * 4 + 2] << 8) | chunk[i * 4 + 3]);
+            w[i] =
+                ((uint)chunk[i * 4] << 24) |
+                ((uint)chunk[i * 4 + 1] << 16) |
+                ((uint)chunk[i * 4 + 2] << 8) |
+                 (uint)chunk[i * 4 + 3];
         }
 
         for (int i = 16; i < 64; i++)

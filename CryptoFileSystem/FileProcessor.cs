@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using CryptoAlgorithms.Ciphers;
 using CryptoAlgorithms.Hashes;
@@ -125,26 +126,19 @@ public static class FileProcessor
             byte[] buffer = new byte[cipher.BlockSize];
             int bytesRead;
 
+            long bytesWritten = 0;
+
             while ((bytesRead = fsIn.Read(buffer, 0, cipher.BlockSize)) > 0)
             {
                 byte[] decryptedBlock = cipher.Decrypt(buffer, key);
-                if (cipher.NeedsPadding)
-                {
-                    if (fsIn.Position == fsIn.Length)
-                    {
-                        int validBytes = cipher.BlockSize;
-                        while (validBytes > 0 && decryptedBlock[validBytes - 1] == 0) validBytes--;
-                        fsOut.Write(decryptedBlock, 0, validBytes);
-                    }
-                    else
-                    {
-                        fsOut.Write(decryptedBlock, 0, decryptedBlock.Length);
-                    }
-                }
-                else
-                {
-                    fsOut.Write(decryptedBlock, 0, bytesRead);
-                }
+
+                long bytesLeft = header.OriginalSize - bytesWritten;
+
+                int bytesToWrite = (int)Math.Min(bytesLeft, decryptedBlock.Length);
+
+                fsOut.Write(decryptedBlock, 0, bytesToWrite);
+
+                bytesWritten += bytesToWrite;
             }
         }
 

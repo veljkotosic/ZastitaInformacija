@@ -57,7 +57,7 @@ public sealed class FolderWatcherService(
                 return;
             }
 
-            string outputFile = Path.Combine(outputFolder, fileName + ".enc");
+            string outputFile = Path.Combine(outputFolder, fileName + ".pkg");
             
             logger.LogInfo(WorkerLogTag, $"Encrypting {fileName}...");
             
