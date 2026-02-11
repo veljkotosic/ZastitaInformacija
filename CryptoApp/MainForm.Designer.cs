@@ -479,7 +479,6 @@ partial class MainForm
         textBoxIPNetwork.PlaceholderText = "e.g. 192.168.0.83";
         textBoxIPNetwork.Size = new System.Drawing.Size(256, 31);
         textBoxIPNetwork.TabIndex = 20;
-        textBoxIPNetwork.KeyPress += textBoxIPNetwork_KeyPress;
         // 
         // buttonEncryptAndSendNetwork
         // 

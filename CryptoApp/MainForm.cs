@@ -409,19 +409,4 @@ public partial class MainForm : Form
             e.Handled = true;
         }
     }
-
-    private void textBoxIPNetwork_KeyPress(object sender, KeyPressEventArgs e)
-    {
-        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
-        {
-            e.Handled = true; 
-        }
-
-        TextBox tb = (sender as TextBox)!;
-        
-        if (e.KeyChar == '.' && (tb.Text.EndsWith(".") || tb.Text.Length == 0))
-        {
-            e.Handled = true;
-        }
-    }
 }
