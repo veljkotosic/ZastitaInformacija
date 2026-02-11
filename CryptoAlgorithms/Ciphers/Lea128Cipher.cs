@@ -1,3 +1,4 @@
+using System.Buffers.Binary;
 using System.Numerics;
 
 namespace CryptoAlgorithms.Ciphers;
@@ -6,23 +7,26 @@ public sealed class Lea128Cipher : LeaCipherBase
 {
     public Lea128Cipher()
     {
-        RoundCount = 24; 
+        RoundCount = 24;
     }
 
     public override string AlgorithmName => "LEA-128";
     public override int KeySize => 16;
-    
+
     public const int KeyLength = 16;
 
     protected override uint[,] GenerateRoundKeys(byte[] key)
     {
         if (key.Length != KeySize) throw new ArgumentException("Key must be 16 bytes for LEA-128.");
-        
+
         uint[] T = new uint[4];
-        for (int i = 0; i < 4; i++) T[i] = BitConverter.ToUInt32(key, i * 4);
+        for (int i = 0; i < 4; i++)
+        {
+            T[i] = BinaryPrimitives.ReadUInt32LittleEndian(key.AsSpan(i * 4, 4));
+        }
 
         uint[,] roundKeys = new uint[RoundCount, 6];
-        
+
         for (int i = 0; i < RoundCount; i++)
         {
             T[0] = BitOperations.RotateLeft(T[0] + BitOperations.RotateLeft(Delta[i % 4], i), 1);
@@ -37,7 +41,7 @@ public sealed class Lea128Cipher : LeaCipherBase
             roundKeys[i, 4] = T[3];
             roundKeys[i, 5] = T[1];
         }
-        
+
         return roundKeys;
     }
 }
